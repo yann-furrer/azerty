@@ -13,7 +13,7 @@ class TaskController extends Controller
      */
     public function index()
     {
-        $tasks = Task::all();
+        $tasks = Task::orderBy("created_at","DESC")->paginate(3);
         return response()->json($tasks);
     }
 
@@ -35,7 +35,12 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $task = Task::create($request->all());
+        if($task){
+
+            $tasks = Task::orderBy("created_at","DESC")->paginate(3);
+            return response()->json($tasks);
+        }
     }
 
     /**
